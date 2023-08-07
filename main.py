@@ -38,7 +38,7 @@ def scrape_and_save_data(number, country, link_number):
 
             # Obtendo o conteúdo da div com a classe "col-xs-12 col-md-2" que contém o "from_de"
             from_de_s = div.select_one("div.col-xs-12.col-md-2").get_text(strip=True)
-            valores_separados = string_exemplo.split('F')
+            valores_separados = from_de_s.split('F')
             valores_separados = valores_separados[0:]
             from_de = valores_separados[0]
 
