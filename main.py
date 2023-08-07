@@ -59,7 +59,7 @@ def scrape_and_save_data(number, country, link_number):
             if not existing_message:
                 data = {
                     "number_sim": number,
-                    "from": from_de,
+                    "from_de": from_de,
                     "content_message": content_message[second_h_index + 1:].strip(),
                     "country": country,
                     "data_created": timestamp_unix,
@@ -71,7 +71,9 @@ def scrape_and_save_data(number, country, link_number):
 
 def scrape_recent_data():
     try:
-        numbers = collection_main.find({"site": "receivesms_co", "active": True, "link_country": os.getenv("LINK_COUNTRY")}).sort("data_created", -1).limit(12)
+        numbers = collection_main.find(
+            {"site": "receivesms_co", "active": True, "link_country": os.getenv("LINK_COUNTRY")}).sort("data_created",
+                                                                                                       -1).limit(12)
         processed_numbers = set()
         for number in numbers:
             link_country = os.getenv("LINK_COUNTRY")
@@ -82,15 +84,15 @@ def scrape_recent_data():
                 scrape_and_save_data(number["number_sim"], number["country"], link_number)
                 processed_numbers.add(number["number_sim"])
 
-        print(f"Números Processados: {len(processed_numbers)}")
+        # print(f"Números Processados: {len(processed_numbers)}")
     except Exception as error:
         print("Erro:", error)
 
 
 def job():
-    print("Iniciando scraping...")
+    # print("Iniciando scraping...")
     scrape_recent_data()
-    print("Scraping concluído.")
+    # print("Scraping concluído.")
 
 
 # Agendando a execução do job a cada 5 segundos
